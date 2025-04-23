@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${plusJakartaSans.className} bg-primary-950 text-primary-50 antialiased min-h-screen`}
+        className={`${plusJakartaSans.className} bg-primary-950 text-primary-50 antialiased h-screen`}
       >
         {children}
       </body>

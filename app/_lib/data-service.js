@@ -22,3 +22,17 @@ export async function createAccount({ email, fullName }) {
 
   return data;
 }
+
+// Get all boards for user
+export async function getBoards(accountId) {
+  let { data, error } = await supabase
+    .from("boards")
+    .select("*")
+    .eq("accountId", accountId);
+
+  if (error) {
+    throw new Error("There was an error in getting boards");
+  }
+
+  return data;
+}
