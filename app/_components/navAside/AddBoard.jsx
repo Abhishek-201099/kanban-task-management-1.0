@@ -5,7 +5,7 @@ import { PlusCircleIcon } from "@heroicons/react/24/solid";
 import Modal from "@/app/_components/modal/Modal";
 import CreateBoardForm from "./CreateBoardForm";
 
-export default function AddBoard() {
+export default function AddBoard({boards}) {
   return (
     <Modal>
       <Modal.Open opens="createBoardForm">
@@ -17,7 +17,7 @@ export default function AddBoard() {
         </button>
       </Modal.Open>
       <Modal.Window name="createBoardForm">
-        <CreateBoardForm />
+        <CreateBoardForm boards={boards}/>
       </Modal.Window>
     </Modal>
   );

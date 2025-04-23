@@ -21,7 +21,7 @@ export default async function NavBoards() {
       ) : (
         ""
       )}
-      <AddBoard />
+      <AddBoard boards={boards} />
     </div>
   );
 }

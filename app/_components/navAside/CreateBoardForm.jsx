@@ -3,7 +3,7 @@ import { PlusCircleIcon, PlusIcon, XMarkIcon } from "@heroicons/react/24/solid";
 
 import { createNewBoardAction } from "@/app/_lib/actions";
 
-export default function CreateBoardForm({ onCloseModal }) {
+export default function CreateBoardForm({ boards, onCloseModal }) {
   const {
     register,
     control,
@@ -50,6 +50,14 @@ export default function CreateBoardForm({ onCloseModal }) {
           placeholder="e.g. Project Abacus"
           {...register("boardName", {
             required: "This field is required",
+            validate: (value) => {
+              const foundBoard = boards.find(
+                (board) =>
+                  board.boardName.toLowerCase().trim() ===
+                  value.toLowerCase().trim()
+              );
+              if (foundBoard) return "The board name already exists";
+            },
           })}
           className="p-4 text-xl font-medium border rounded-md border-primary-50 text-primary-950  outline-none"
         />
