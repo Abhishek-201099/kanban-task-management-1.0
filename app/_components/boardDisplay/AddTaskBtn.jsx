@@ -5,7 +5,7 @@ import { PlusCircleIcon } from "@heroicons/react/24/solid";
 import Modal from "@/app/_components/modal/Modal";
 import CreateTaskForm from "./CreateTaskForm";
 
-export default function AddTaskBtn({ boardColumns }) {
+export default function AddTaskBtn({ boardColumns, tasks }) {
   return (
     <Modal>
       <Modal.Open opens="createTaskForm">
@@ -20,7 +20,7 @@ export default function AddTaskBtn({ boardColumns }) {
       </Modal.Open>
 
       <Modal.Window name="createTaskForm">
-        <CreateTaskForm boardColumns={boardColumns} />
+        <CreateTaskForm boardColumns={boardColumns} tasks={tasks} />
       </Modal.Window>
     </Modal>
   );

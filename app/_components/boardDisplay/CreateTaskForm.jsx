@@ -4,7 +4,7 @@ import { PlusCircleIcon, PlusIcon, XMarkIcon } from "@heroicons/react/24/solid";
 
 import { addNewTaskAction } from "@/app/_lib/actions";
 
-export default function CreateTaskForm({ boardColumns, onCloseModal }) {
+export default function CreateTaskForm({ boardColumns, tasks, onCloseModal }) {
   const pathName = usePathname();
   const {
     register,
@@ -35,7 +35,8 @@ export default function CreateTaskForm({ boardColumns, onCloseModal }) {
       (boardColumn) => boardColumn.columnName === taskCurrentStatus
     ).id;
 
-    await addNewTaskAction(data);
+    console.log("#data : ", data);
+    // await addNewTaskAction(data);
 
     reset();
     onCloseModal();
@@ -57,6 +58,14 @@ export default function CreateTaskForm({ boardColumns, onCloseModal }) {
             id="taskName"
             {...register("taskName", {
               required: "This field is required",
+              validate: (value) => {
+                const foundTask = tasks.find(
+                  (task) =>
+                    task.taskName.replace(/\s+/g, " ").toLowerCase().trim() ===
+                    value.replace(/\s+/g, " ").toLowerCase().trim()
+                );
+                if (foundTask) return "Task already exists";
+              },
             })}
             placeholder="e.g. Refactor files"
             className="p-4 text-xl font-medium border rounded-md border-primary-50 text-primary-950  outline-none"

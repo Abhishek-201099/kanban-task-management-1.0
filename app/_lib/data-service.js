@@ -68,3 +68,18 @@ export async function getBoardColumns(boardId) {
 
   return columns;
 }
+
+export async function getTasks(accountId, boardId) {
+  let { data: tasks, error } = await supabase
+    .from("tasks")
+    .select("*")
+    .eq("accountId", accountId)
+    .eq("boardId", boardId);
+
+  if (error) {
+    console.log("###GetTasks error : ", error.message);
+    throw new Error("There was an error in getting tasks");
+  }
+
+  return tasks;
+}

@@ -41,6 +41,7 @@ export async function createNewBoardAction(boardName, boardColumns) {
   if (columnError) throw new Error("There was a problem in adding the columns");
 
   revalidatePath("/boards");
+  redirect(`/boards/${board.id}`);
 }
 
 export async function addNewTaskAction(data) {

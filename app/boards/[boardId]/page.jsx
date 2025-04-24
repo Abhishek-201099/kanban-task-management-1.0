@@ -4,6 +4,7 @@ import {
   getAccount,
   getBoardColumns,
   getBoards,
+  getTasks,
 } from "@/app/_lib/data-service";
 
 export default async function Page({ params }) {
@@ -12,10 +13,16 @@ export default async function Page({ params }) {
   const account = await getAccount(session.user.email);
   const boards = await getBoards(account.id);
   const boardColumns = await getBoardColumns(boardId);
+  const tasks = await getTasks(account.id, boardId);
 
   return (
     <div className="grid grid-rows-[auto_1fr]">
-      <BoardNav boards={boards} boardId={boardId} boardColumns={boardColumns} />
+      <BoardNav
+        boards={boards}
+        boardId={boardId}
+        boardColumns={boardColumns}
+        tasks={tasks}
+      />
       <div>board display</div>
     </div>
   );

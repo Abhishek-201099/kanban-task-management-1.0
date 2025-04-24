@@ -1,7 +1,7 @@
 import AddTaskBtn from "./AddTaskBtn";
 import BoardNavContextMenu from "./BoardNavContextMenu";
 
-export default function BoardNav({ boardId, boards, boardColumns }) {
+export default function BoardNav({ boardId, boards, boardColumns, tasks }) {
   const board = boards.find((board) => board.id === +boardId);
 
   return (
@@ -10,7 +10,7 @@ export default function BoardNav({ boardId, boards, boardColumns }) {
         {board.boardName}
       </h2>
 
-      <AddTaskBtn boardColumns={boardColumns} />
+      <AddTaskBtn boardColumns={boardColumns} tasks={tasks}/>
 
       <BoardNavContextMenu boards={boards} />
     </div>
