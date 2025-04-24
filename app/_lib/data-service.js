@@ -1,3 +1,4 @@
+import { revalidatePath } from "next/cache";
 import { supabase } from "./supabase";
 
 // Get account
@@ -35,4 +36,35 @@ export async function getBoards(accountId) {
   }
 
   return data;
+}
+
+export async function getBoard(boardId) {
+  let { data: board, error } = await supabase
+    .from("boards")
+    .select("*")
+    .eq("id", boardId)
+    .single();
+
+  if (error) {
+    console.log("##getBoard : ", error.message);
+    throw new Error("There was an error in getting the board");
+  }
+
+  revalidatePath(`/boards/${boardId}`);
+
+  return board;
+}
+
+export async function getBoardColumns(boardId) {
+  let { data: columns, error } = await supabase
+    .from("columns")
+    .select("*")
+    .eq("boardId", boardId);
+
+  if (error) {
+    console.log("###getBoardColumns error : ", error.message);
+    throw new Error("There was an error in getting the board columns");
+  }
+
+  return columns;
 }

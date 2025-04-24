@@ -28,6 +28,7 @@ export default function CreateBoardForm({ boards, onCloseModal }) {
   async function onSubmit(data) {
     const { boardName, boardColumns } = data;
     await createNewBoardAction(boardName, boardColumns);
+    reset();
     onCloseModal();
   }
 

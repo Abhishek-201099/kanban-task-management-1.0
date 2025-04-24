@@ -1,8 +1,10 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { auth, signIn, signOut } from "./auth";
 import { getAccount } from "./data-service";
 import { supabase } from "./supabase";
+import { redirect } from "next/navigation";
 
 export async function signInAction() {
   await signIn("google", { redirectTo: "/boards" });
@@ -37,4 +39,106 @@ export async function createNewBoardAction(boardName, boardColumns) {
   const { error: columnError } = await supabase.from("columns").insert(inserts);
 
   if (columnError) throw new Error("There was a problem in adding the columns");
+
+  revalidatePath("/boards");
+}
+
+export async function addNewTaskAction(data) {
+  const session = await auth();
+  const account = await getAccount(session.user.email);
+  const { taskName, taskDescription, subtasks, boardId, columnId } = data;
+
+  const { data: task, error } = await supabase
+    .from("tasks")
+    .insert([
+      { taskName, taskDescription, accountId: account.id, boardId, columnId },
+    ])
+    .select()
+    .single();
+
+  if (error) throw new Error("There was a problem in adding the new task");
+
+  const inserts = subtasks.map((subtask) => {
+    return {
+      subtaskName: subtask.subtaskName,
+      isChecked: false,
+      accountId: account.id,
+      boardId,
+      columnId,
+      taskId: task.id,
+    };
+  });
+
+  const { error: subtaskError } = await supabase
+    .from("subtasks")
+    .insert(inserts);
+
+  if (subtaskError) {
+    throw new Error("There was a problem in adding the subtasks");
+  }
+
+  revalidatePath(`/boards/${boardId}`);
+}
+
+export async function updateBoardNameAction(data) {
+  const { updatedBoardName, boardId } = data;
+
+  const { error } = await supabase
+    .from("boards")
+    .update({ boardName: updatedBoardName })
+    .eq("id", boardId);
+
+  if (error) {
+    throw new Error("Board name could not be updated");
+  }
+
+  revalidatePath("/boards");
+  revalidatePath(`/boards/${boardId}`);
+}
+
+export async function deleteBoardAction(boardId) {
+  // To delete a board we have to delete -
+  // 1) Subtasks from subtasks for boardId.
+  const { error: subtasksError } = await supabase
+    .from("subtasks")
+    .delete()
+    .eq("boardId", boardId);
+
+  if (subtasksError) {
+    console.error("##deletBoardAction subtasks error:", subtasksError);
+    throw new Error("Subtasks could not be deleted");
+  }
+
+  // 2) Tasks from tasks for boardId.
+  const { error: tasksError } = await supabase
+    .from("tasks")
+    .delete()
+    .eq("boardId", boardId);
+
+  if (tasksError) {
+    console.error("##deletBoardAction tasks error:", tasksError);
+    throw new Error("Tasks could not be deleted");
+  }
+
+  // 3) Columns from columns for boardID.
+  const { error: columnError } = await supabase
+    .from("columns")
+    .delete()
+    .eq("boardId", boardId);
+
+  if (columnError) {
+    console.error("##deletBoardAction col error:", columnError);
+    throw new Error("Columns could not be deleted");
+  }
+
+  // 4) Board from board columns.
+  const { error } = await supabase.from("boards").delete().eq("id", boardId);
+
+  if (error) {
+    console.error("##deletBoardAction board error:", error);
+    throw new Error("Board could not be deleted");
+  }
+
+  revalidatePath("/boards");
+  redirect("/boards");
 }

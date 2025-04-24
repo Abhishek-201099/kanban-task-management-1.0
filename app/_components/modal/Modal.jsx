@@ -36,7 +36,7 @@ function Window({ children, name }) {
     <div className="fixed top-0 left-0 w-full h-screen backdrop-blur-sm z-1000 transition-all">
       <div
         ref={ref}
-        className="w-[600px] fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  px-10 py-6 flex flex-col gap-6 rounded-xl bg-primary-900 shadow-2xl pb-8"
+        className="overflow-scroll scrollbar-hide w-auto min-w-[800px] max-h-[800px] h-auto  fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  px-10 py-6 flex flex-col gap-6 rounded-xl bg-primary-900 shadow-2xl pb-8"
       >
         <div className="flex items-center justify-end">
           <button onClick={close}>

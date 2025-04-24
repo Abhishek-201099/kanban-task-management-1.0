@@ -1,7 +1,8 @@
 import Image from "next/image";
-import { auth } from "../_lib/auth";
-import { getAccount, getBoards } from "../_lib/data-service";
 import { ArrowUpLeftIcon } from "@heroicons/react/24/solid";
+
+import { auth } from "@/app/_lib/auth";
+import { getAccount, getBoards } from "@/app/_lib/data-service";
 
 export const metadata = {
   title: "Boards",
@@ -37,8 +38,6 @@ export default async function Page() {
             : "Select a board and start planning !"}
         </span>
       </p>
-
-      <p></p>
     </main>
   );
 }
