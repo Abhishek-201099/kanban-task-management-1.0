@@ -59,6 +59,8 @@ export default function CreateTaskForm({ boardColumns, tasks, onCloseModal }) {
             {...register("taskName", {
               required: "This field is required",
               validate: (value) => {
+                if (value.trim() === "")
+                  return "Please provide a valid task name";
                 const foundTask = tasks.find(
                   (task) =>
                     task.taskName.replace(/\s+/g, " ").toLowerCase().trim() ===

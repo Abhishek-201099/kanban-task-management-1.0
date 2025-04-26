@@ -5,11 +5,11 @@ import { signOutAction } from "@/app/_lib/actions";
 export default function SignoutButton() {
   return (
     <form action={signOutAction}>
-      <button className="flex items-center gap-4  hover:text-primary-300">
+      <button className="flex items-center gap-2  hover:text-primary-300">
         <span>
-          <ArrowRightStartOnRectangleIcon className="h-8 w-8" />
+          <ArrowRightStartOnRectangleIcon className="h-6 w-6" />
         </span>
-        <span className="text-xl transition-all">Sign out</span>
+        <span className="text-lg ">Sign out</span>
       </button>
     </form>
   );

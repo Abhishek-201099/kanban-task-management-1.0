@@ -2,8 +2,12 @@ import { useFieldArray, useForm } from "react-hook-form";
 import { PlusCircleIcon, PlusIcon, XMarkIcon } from "@heroicons/react/24/solid";
 
 import { createNewBoardAction } from "@/app/_lib/actions";
+import { useTransition } from "react";
+import SpinnerMini from "../ui/SpinnerMini";
 
 export default function CreateBoardForm({ boards, onCloseModal }) {
+  const [isPending, startTransition] = useTransition();
+
   const {
     register,
     control,
@@ -27,7 +31,9 @@ export default function CreateBoardForm({ boards, onCloseModal }) {
 
   async function onSubmit(data) {
     const { boardName, boardColumns } = data;
-    await createNewBoardAction(boardName, boardColumns);
+    startTransition(
+      async () => await createNewBoardAction(boardName, boardColumns)
+    );
     reset();
     onCloseModal();
   }
@@ -52,10 +58,12 @@ export default function CreateBoardForm({ boards, onCloseModal }) {
           {...register("boardName", {
             required: "This field is required",
             validate: (value) => {
+              if (value.trim() === "")
+                return "Please provide a valid board name";
               const foundBoard = boards.find(
                 (board) =>
-                  board.boardName.toLowerCase().trim() ===
-                  value.toLowerCase().trim()
+                  board.boardName.replace(/\s+/g, " ").toLowerCase().trim() ===
+                  value.replace(/\s+/g, " ").toLowerCase().trim()
               );
               if (foundBoard) return "The board name already exists";
             },
@@ -116,13 +124,25 @@ export default function CreateBoardForm({ boards, onCloseModal }) {
         </button>
 
         <button
+          disabled={isPending}
           type="submit"
           className="flex items-center justify-center gap-4 text-xl bg-primary-700 rounded-3xl p-4 hover:bg-primary-600 transition-all"
         >
-          <span>
-            <PlusIcon className="h-7 w-7" />
-          </span>
-          <span>Create board</span>
+          {!isPending ? (
+            <>
+              <span>
+                <PlusIcon className="h-7 w-7" />
+              </span>
+              <span>Create board</span>
+            </>
+          ) : (
+            <>
+              <span>
+                <SpinnerMini />
+              </span>
+              <span>Creating board</span>
+            </>
+          )}
         </button>
       </div>
     </form>

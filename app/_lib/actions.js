@@ -143,3 +143,22 @@ export async function deleteBoardAction(boardId) {
   revalidatePath("/boards");
   redirect("/boards");
 }
+
+export async function updateAccountAction(data) {
+  const { fullName } = data;
+  const session = await auth();
+  const account = await getAccount(session.user.email);
+
+  const { error } = await supabase
+    .from("accounts")
+    .update({ fullName })
+    .eq("id", account.id);
+
+  if (error) {
+    console.log("###updateAccountAction error : ", error.message);
+    throw new Error("Account could not be updated");
+  }
+
+  revalidatePath(`/boards/settings`);
+  revalidatePath(`/boards`);
+}

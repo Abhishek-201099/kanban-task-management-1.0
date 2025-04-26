@@ -17,7 +17,7 @@ export default function Boards({ boards }) {
           key={i}
           className={`${
             +pathName.split("/").at(2) === board.id ? "bg-primary-700" : ""
-          }  flex items-center gap-4 hover:bg-primary-800  px-6 py-5 rounded-br-full rounded-tr-full [word-spacing:4px]`}
+          } flex items-center gap-6 hover:bg-primary-800  px-6 py-5 rounded-br-full rounded-tr-full [word-spacing:4px]`}
         >
           <span>
             <Image src={boardIcon} className="h-6 w-6" alt={board.boardName} />
