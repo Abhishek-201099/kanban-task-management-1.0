@@ -1,3 +1,4 @@
+import BoardDisplay from "@/app/_components/boardDisplay/BoardDisplay";
 import BoardNav from "@/app/_components/boardDisplay/BoardNav";
 import { auth } from "@/app/_lib/auth";
 import {
@@ -23,7 +24,7 @@ export default async function Page({ params }) {
         boardColumns={boardColumns}
         tasks={tasks}
       />
-      <div>board display</div>
+      <BoardDisplay boardColumns={boardColumns} tasks={tasks} />
     </div>
   );
 }
