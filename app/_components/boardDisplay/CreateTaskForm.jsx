@@ -35,8 +35,7 @@ export default function CreateTaskForm({ boardColumns, tasks, onCloseModal }) {
       (boardColumn) => boardColumn.columnName === taskCurrentStatus
     ).id;
 
-    console.log("#data : ", data);
-    // await addNewTaskAction(data);
+    await addNewTaskAction(data);
 
     reset();
     onCloseModal();
@@ -139,7 +138,7 @@ export default function CreateTaskForm({ boardColumns, tasks, onCloseModal }) {
             <span>
               <PlusCircleIcon className="h-7 w-7" />
             </span>
-            <span className="text-xl">Add column</span>
+            <span className="text-xl">Add subtask</span>
           </button>
         </div>
 

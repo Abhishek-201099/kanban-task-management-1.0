@@ -1,7 +1,7 @@
 import BoardColumn from "./BoardColumn";
 import AddColBtn from "./AddColBtn";
 
-export default async function BoardDisplay({ boardColumns, tasks }) {
+export default function BoardDisplay({ boardColumns, tasks }) {
   return (
     <main className="overflow-scroll scrollbar-hide">
       {/* Columns */}
@@ -10,7 +10,7 @@ export default async function BoardDisplay({ boardColumns, tasks }) {
           <BoardColumn key={index} boardColumn={boardColumn} tasks={tasks} />
         ))}
         {/* Column add btn */}
-        <AddColBtn />
+        <AddColBtn boardColumns={boardColumns} />
       </div>
     </main>
   );

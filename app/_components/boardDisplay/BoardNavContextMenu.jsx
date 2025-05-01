@@ -17,7 +17,7 @@ export default function BoardNavContextMenu({ boards }) {
     <Modal>
       <Menus>
         <div className="flex items-center justify-end">
-          <Menus.Toggle id={board.id} />
+          <Menus.Toggle id={board.id} direction="vertical" />
           <Menus.List id={board.id}>
             <Modal.Open opens="updateBoardNameForm">
               <Menus.Button

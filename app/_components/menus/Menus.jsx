@@ -1,5 +1,8 @@
 const { useOutsideClick } = require("@/app/_hooks/useOutsideClick.");
-const { EllipsisVerticalIcon } = require("@heroicons/react/24/solid");
+const {
+  EllipsisVerticalIcon,
+  EllipsisHorizontalIcon,
+} = require("@heroicons/react/24/solid");
 const { createContext, useState, useContext } = require("react");
 
 const MenusContext = createContext();
@@ -20,7 +23,7 @@ export default function Menus({ children }) {
   );
 }
 
-function Toggle({ id }) {
+function Toggle({ id, direction }) {
   const { openId, close, open, setPosition } = useContext(MenusContext);
 
   function handleToggle(e) {
@@ -39,7 +42,11 @@ function Toggle({ id }) {
       onClick={handleToggle}
       className="rounded-sm transition-all duration-200 transform translate-x-2"
     >
-      <EllipsisVerticalIcon className="h-10 w-10" />
+      {direction === "vertical" ? (
+        <EllipsisVerticalIcon className="h-10 w-10" />
+      ) : (
+        <EllipsisHorizontalIcon className="h-10 w-10" />
+      )}
     </button>
   );
 }
@@ -73,7 +80,7 @@ function Button({ icon, children, onClick }) {
     <li>
       <button
         onClick={handleClick}
-        className="w-full text-left bg-primary-900 hover:bg-primary-800 border-none p-6 [word-spacing:4px] transition-all  flex items-center gap-2"
+        className="w-full text-left text-primary-50 bg-primary-900 hover:bg-primary-800 border-none p-6 [word-spacing:4px] transition-all  flex items-center gap-2"
       >
         {icon}
         <span className="text-lg">{children}</span>

@@ -162,3 +162,68 @@ export async function updateAccountAction(data) {
   revalidatePath(`/boards/settings`);
   revalidatePath(`/boards`);
 }
+
+export async function addNewColumnAction({ newColumn, boardId }) {
+  // Add columnName, boardId,accountId
+  const session = await auth();
+  const account = await getAccount(session.user.email);
+
+  const { data, error } = await supabase
+    .from("columns")
+    .insert([{ columnName: newColumn, accountId: account.id, boardId }])
+    .select()
+    .single();
+
+  if (error) {
+    console.log("##Addnewcolumnaction error : ", error.message);
+    throw new Error("There was a problem in adding the new column");
+  }
+
+  revalidatePath(`/boards/${boardId}`);
+}
+
+export async function deleteColumnAction(columnId, boardId) {
+  const session = await auth();
+  const account = await getAccount(session.user.email);
+
+  // 1) Delete subtasks for the column
+  const { error: subtasksError } = await supabase
+    .from("subtasks")
+    .delete()
+    .eq("columnId", columnId)
+    .eq("boardId", boardId)
+    .eq("accountId", account.id);
+
+  if (subtasksError) {
+    console.error("##deleteColumnAction subtasks error:", subtasksError);
+    throw new Error("Subtasks could not be deleted");
+  }
+
+  // 2) Delete tasks for the column
+  const { error: tasksError } = await supabase
+    .from("tasks")
+    .delete()
+    .eq("columnId", columnId)
+    .eq("boardId", boardId)
+    .eq("accountId", account.id);
+
+  if (tasksError) {
+    console.error("##deleteColumnAction tasks error:", tasksError);
+    throw new Error("Tasks could not be deleted");
+  }
+
+  // 3) Delete column
+  const { error } = await supabase
+    .from("columns")
+    .delete()
+    .eq("id", columnId)
+    .eq("boardId", boardId)
+    .eq("accountId", account.id);
+
+  if (error) {
+    console.error("##deleteColumnAction tasks error:", error.message);
+    throw new Error("Column could not be deleted");
+  }
+
+  revalidatePath(`/boards/${boardId}`);
+}
