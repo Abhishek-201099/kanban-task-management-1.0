@@ -4,6 +4,7 @@ import { XMarkIcon } from "@heroicons/react/24/solid";
 import { cloneElement, createContext, useContext, useState } from "react";
 
 import { useOutsideClick } from "@/app/_hooks/useOutsideClick.";
+import { createPortal } from "react-dom";
 
 const ModalContext = createContext();
 
@@ -32,7 +33,7 @@ function Window({ children, name }) {
 
   if (openName !== name) return null;
 
-  return (
+  return createPortal(
     <div className="fixed top-0 left-0 w-full h-screen backdrop-blur-sm z-1000 transition-all">
       <div
         ref={ref}
@@ -46,7 +47,8 @@ function Window({ children, name }) {
 
         {cloneElement(children, { onCloseModal: close })}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
 

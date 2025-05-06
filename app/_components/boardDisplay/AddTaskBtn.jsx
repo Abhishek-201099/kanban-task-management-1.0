@@ -3,7 +3,7 @@
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
 
 import Modal from "@/app/_components/modal/Modal";
-import CreateTaskForm from "./CreateTaskForm";
+import CreateEditTaskForm from "./CreateEditTaskForm";
 
 export default function AddTaskBtn({ boardColumns, tasks }) {
   return (
@@ -20,7 +20,7 @@ export default function AddTaskBtn({ boardColumns, tasks }) {
       </Modal.Open>
 
       <Modal.Window name="createTaskForm">
-        <CreateTaskForm boardColumns={boardColumns} tasks={tasks} />
+        <CreateEditTaskForm boardColumns={boardColumns} tasks={tasks} />
       </Modal.Window>
     </Modal>
   );

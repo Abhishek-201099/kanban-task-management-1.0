@@ -3,13 +3,22 @@
 import Task from "./Task";
 import ColContextMenu from "./ColContextMenu";
 
-export default function BoardColumn({ boardColumn, tasks }) {
+export default function BoardColumn({
+  boardColumn,
+  tasks,
+  subtasks,
+  boardColumns,
+}) {
   const tasksForColumn = tasks.filter(
     (task) => task.columnId === boardColumn.id
   );
 
+  const subtasksForCol = subtasks.filter(
+    (subtask) => subtask.columnId === boardColumn.id
+  );
+
   return (
-    <div className="min-w-[400px]  flex flex-col gap-6  rounded-xl p-4 bg-primary-900 shadow-md shadow-primary-900">
+    <div className="min-w-[450px]  flex flex-col gap-6  rounded-xl p-4 bg-primary-900 shadow-md shadow-primary-900 group">
       <div className="flex items-center justify-between text-primary-500">
         <h3 className="uppercase text-primary-500 font-semibold text-lg [word-spacing:4px]">
           {boardColumn.columnName} ({tasksForColumn.length})
@@ -20,7 +29,13 @@ export default function BoardColumn({ boardColumn, tasks }) {
 
       {/* Tasks */}
       {tasksForColumn.map((task, index) => (
-        <Task key={index} task={task} />
+        <Task
+          key={index}
+          task={task}
+          tasks={tasks}
+          subtasksForCol={subtasksForCol}
+          boardColumns={boardColumns}
+        />
       ))}
     </div>
   );

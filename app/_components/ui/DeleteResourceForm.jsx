@@ -13,7 +13,7 @@ export default function DeleteResourceForm({
           className="border-none py-4 px-6 rounded-3xl bg-red-500 hover:bg-red-400"
           onClick={() => {
             onConfirm();
-            onCloseModal();
+            onCloseModal?.();
           }}
         >
           Yes

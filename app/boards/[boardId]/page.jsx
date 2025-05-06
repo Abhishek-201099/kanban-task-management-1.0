@@ -5,6 +5,7 @@ import {
   getAccount,
   getBoardColumns,
   getBoards,
+  getSubtasksForTask,
   getTasks,
 } from "@/app/_lib/data-service";
 
@@ -15,6 +16,7 @@ export default async function Page({ params }) {
   const boards = await getBoards(account.id);
   const boardColumns = await getBoardColumns(boardId);
   const tasks = await getTasks(account.id, boardId);
+  const subtasks = await getSubtasksForTask(boardId, account.id);
 
   return (
     <div className="grid grid-rows-[auto_1fr]">
@@ -24,7 +26,11 @@ export default async function Page({ params }) {
         boardColumns={boardColumns}
         tasks={tasks}
       />
-      <BoardDisplay boardColumns={boardColumns} tasks={tasks} />
+      <BoardDisplay
+        boardColumns={boardColumns}
+        tasks={tasks}
+        subtasks={subtasks}
+      />
     </div>
   );
 }

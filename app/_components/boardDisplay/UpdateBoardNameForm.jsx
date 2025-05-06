@@ -45,8 +45,8 @@ export default function UpdateBoardNameForm({ boards, onCloseModal }) {
 
             const foundBoard = boards.find(
               (board) =>
-                board.boardName.toLowerCase().trim() ===
-                value.toLowerCase().trim()
+                board.boardName.replace(/\s+/g, " ").toLowerCase().trim() ===
+                value.replace(/\s+/g, " ").toLowerCase().trim()
             );
             if (foundBoard) return "Board name already exists";
           },

@@ -2,19 +2,26 @@ import { usePathname } from "next/navigation";
 import { useFieldArray, useForm } from "react-hook-form";
 import { PlusCircleIcon, PlusIcon, XMarkIcon } from "@heroicons/react/24/solid";
 
-import { addNewTaskAction } from "@/app/_lib/actions";
+import { addNewTaskAction, editTaskAction } from "@/app/_lib/actions";
 
-export default function CreateTaskForm({ boardColumns, tasks, onCloseModal }) {
+export default function CreateEditTaskForm({
+  boardColumns,
+  tasks,
+  curTask = {},
+  subtaskForTask,
+  onCloseModal,
+}) {
   const pathName = usePathname();
   const {
     register,
     control,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm({
     defaultValues: {
-      subtasks: [{ subtaskName: "" }, { subtaskName: "" }],
+      subtasks: subtaskForTask?.map((subtask) => {
+        return { subtaskName: subtask?.subtaskName };
+      }) || [{ subtaskName: "" }, { subtaskName: "" }],
     },
   });
 
@@ -35,16 +42,19 @@ export default function CreateTaskForm({ boardColumns, tasks, onCloseModal }) {
       (boardColumn) => boardColumn.columnName === taskCurrentStatus
     ).id;
 
-    await addNewTaskAction(data);
+    if (Object.keys(curTask).length === 0) {
+      await addNewTaskAction(data);
+    } else {
+      await editTaskAction(data, curTask, subtaskForTask);
+    }
 
-    reset();
-    onCloseModal();
+    onCloseModal?.();
   }
 
   return (
     <div className="flex flex-col gap-6">
       <p className="text-4xl font-bold [word-spacing:6px] text-accent-400 uppercase">
-        Add new task
+        {Object.keys(curTask).length === 0 ? "Add new task" : "Edit task"}
       </p>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
         {/* TaskName */}
@@ -55,6 +65,7 @@ export default function CreateTaskForm({ boardColumns, tasks, onCloseModal }) {
           <input
             type="text"
             id="taskName"
+            defaultValue={curTask?.taskName ? curTask?.taskName : ""}
             {...register("taskName", {
               required: "This field is required",
               validate: (value) => {
@@ -86,6 +97,9 @@ export default function CreateTaskForm({ boardColumns, tasks, onCloseModal }) {
             id="taskDescription"
             cols="30"
             rows="10"
+            defaultValue={
+              curTask?.taskDescription ? curTask?.taskDescription : ""
+            }
             placeholder="description..."
             {...register("taskDescription", {
               required: "This field is required",
@@ -154,6 +168,13 @@ export default function CreateTaskForm({ boardColumns, tasks, onCloseModal }) {
           <select
             id="taskCurrentStatus"
             {...register("taskCurrentStatus")}
+            defaultValue={
+              curTask?.columnId
+                ? boardColumns.find(
+                    (boardColumn) => boardColumn.id === curTask?.columnId
+                  ).columnName
+                : ""
+            }
             className="p-4 text-xl font-medium border rounded-md border-primary-50 text-primary-950  outline-none"
           >
             {boardColumns.map((boardColumn, index) => {
@@ -174,7 +195,9 @@ export default function CreateTaskForm({ boardColumns, tasks, onCloseModal }) {
           <span>
             <PlusIcon className="h-7 w-7" />
           </span>
-          <span>Add task</span>
+          <span>
+            {Object.keys(curTask).length === 0 ? "Add task" : "Edit task"}
+          </span>
         </button>
       </form>
     </div>

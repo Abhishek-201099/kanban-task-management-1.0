@@ -43,9 +43,9 @@ function Toggle({ id, direction }) {
       className="rounded-sm transition-all duration-200 transform translate-x-2"
     >
       {direction === "vertical" ? (
-        <EllipsisVerticalIcon className="h-10 w-10" />
+        <EllipsisVerticalIcon className="h-8 w-8" />
       ) : (
-        <EllipsisHorizontalIcon className="h-10 w-10" />
+        <EllipsisHorizontalIcon className="h-8 w-8" />
       )}
     </button>
   );
@@ -80,7 +80,7 @@ function Button({ icon, children, onClick }) {
     <li>
       <button
         onClick={handleClick}
-        className="w-full text-left text-primary-50 bg-primary-900 hover:bg-primary-800 border-none p-6 [word-spacing:4px] transition-all  flex items-center gap-2"
+        className="w-full text-left text-primary-50 bg-primary-900 hover:bg-primary-800 border-none p-6 [word-spacing:4px] transition-all  flex items-center gap-4"
       >
         {icon}
         <span className="text-lg">{children}</span>

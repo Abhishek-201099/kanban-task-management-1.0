@@ -74,7 +74,8 @@ export async function getTasks(accountId, boardId) {
     .from("tasks")
     .select("*")
     .eq("accountId", accountId)
-    .eq("boardId", boardId);
+    .eq("boardId", boardId)
+    .order("created_at");
 
   if (error) {
     console.log("###GetTasks error : ", error.message);
@@ -82,4 +83,20 @@ export async function getTasks(accountId, boardId) {
   }
 
   return tasks;
+}
+
+export async function getSubtasksForTask(boardId, accountId) {
+  // taskId, columnId, boardId, accountId
+  let { data: subtasks, error } = await supabase
+    .from("subtasks")
+    .select("*")
+    .eq("boardId", boardId)
+    .eq("accountId", accountId);
+
+  if (error) {
+    console.log("###GetSubtasks error : ", error.message);
+    throw new Error("There was an error in getting subtasks");
+  }
+
+  return subtasks;
 }
