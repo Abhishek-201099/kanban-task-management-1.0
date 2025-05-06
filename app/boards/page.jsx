@@ -4,10 +4,6 @@ import { ArrowUpLeftIcon } from "@heroicons/react/24/solid";
 import { auth } from "@/app/_lib/auth";
 import { getAccount, getBoards } from "@/app/_lib/data-service";
 
-export const metadata = {
-  title: "Boards",
-};
-
 export default async function Page() {
   const session = await auth();
   const account = await getAccount(session.user.email);

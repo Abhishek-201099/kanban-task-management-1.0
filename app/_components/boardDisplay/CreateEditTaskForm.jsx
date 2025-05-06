@@ -71,12 +71,20 @@ export default function CreateEditTaskForm({
               validate: (value) => {
                 if (value.trim() === "")
                   return "Please provide a valid task name";
+
                 const foundTask = tasks.find(
                   (task) =>
                     task.taskName.replace(/\s+/g, " ").toLowerCase().trim() ===
                     value.replace(/\s+/g, " ").toLowerCase().trim()
                 );
-                if (foundTask) return "Task already exists";
+
+                if (foundTask) {
+                  if (foundTask.taskName === curTask?.taskName) {
+                    return true;
+                  } else {
+                    return "Task already exists";
+                  }
+                }
               },
             })}
             placeholder="e.g. Refactor files"

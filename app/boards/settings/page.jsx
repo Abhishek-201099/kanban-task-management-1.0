@@ -2,6 +2,10 @@ import { auth } from "@/app/_lib/auth";
 import { getAccount } from "../../_lib/data-service";
 import AccountSettingsForm from "@/app/_components/boardDisplay/AccountSettingsForm";
 
+export const metadata = {
+  title: "Settings",
+};
+
 export default async function Page() {
   const session = await auth();
   const account = await getAccount(session.user.email);

@@ -3,11 +3,18 @@ import BoardNav from "@/app/_components/boardDisplay/BoardNav";
 import { auth } from "@/app/_lib/auth";
 import {
   getAccount,
+  getBoard,
   getBoardColumns,
   getBoards,
   getSubtasksForTask,
   getTasks,
 } from "@/app/_lib/data-service";
+
+export async function generateMetadata({ params }) {
+  const { boardId } = params;
+  const board = await getBoard(boardId);
+  return { title: board.boardName };
+}
 
 export default async function Page({ params }) {
   const { boardId } = params;

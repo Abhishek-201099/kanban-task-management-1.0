@@ -37,6 +37,7 @@ export default function UpdateBoardNameForm({ boards, onCloseModal }) {
         {...register("updatedBoardName", {
           required: "Please enter the board name",
           validate: (value) => {
+            if (value.trim() === "") return "Please provide a valid board name";
             if (
               board.boardName.toLowerCase().trim() ===
               value.toLowerCase().trim()
