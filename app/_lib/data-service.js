@@ -29,7 +29,8 @@ export async function getBoards(accountId) {
   let { data, error } = await supabase
     .from("boards")
     .select("*")
-    .eq("accountId", accountId);
+    .eq("accountId", accountId)
+    .order("created_at");
 
   if (error) {
     throw new Error("There was an error in getting boards");

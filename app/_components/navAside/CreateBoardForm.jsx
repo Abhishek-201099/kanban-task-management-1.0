@@ -41,14 +41,17 @@ export default function CreateBoardForm({ boards, onCloseModal }) {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="grid grid-rows-[auto_auto_200px_auto] gap-y-8  "
+      className="grid grid-rows-[auto_auto_200px_auto] gap-y-6"
     >
-      <p className="text-4xl font-bold [word-spacing:6px] text-accent-400 uppercase">
+      <p className="text-lg lg:text-xl font-bold [word-spacing:6px] text-accent-400 uppercase">
         Add new Board
       </p>
 
-      <div className="flex flex-col gap-2 mb-2">
-        <label htmlFor="boardName" className="text-xl text-primary-300">
+      <div className="flex flex-col gap-4 mb-2">
+        <label
+          htmlFor="boardName"
+          className="text-xs md:text-sm lg:text-base text-primary-300 [word-spacing:6px]"
+        >
           Board name
         </label>
         <input
@@ -68,17 +71,19 @@ export default function CreateBoardForm({ boards, onCloseModal }) {
               if (foundBoard) return "The board name already exists";
             },
           })}
-          className="p-4 text-xl font-medium border rounded-md border-primary-50 text-primary-950  outline-none"
+          className="p-2 text-sm font-medium border rounded-md border-primary-50 text-primary-950 bg-primary-100  outline-none"
         />
         {errors?.boardName?.message && (
-          <p className="text-lg text-red-300 font-light [word-spacing:2px]">
+          <p className="text-sm md:text-base text-red-300 font-light [word-spacing:2px]">
             {errors?.boardName?.message}
           </p>
         )}
       </div>
 
       <div className="flex flex-col gap-4">
-        <label className="text-xl text-primary-300">Board columns</label>
+        <label className="text-xs md:text-sm lg:text-base text-primary-300 [word-spacing:6px]">
+          Board columns
+        </label>
 
         <div className="flex flex-col gap-4 overflow-scroll scrollbar-hide">
           {fields.map((column, index) => (
@@ -90,14 +95,14 @@ export default function CreateBoardForm({ boards, onCloseModal }) {
                     required: "This field is required",
                   })}
                   placeholder={`e.g. column ${index + 1}`}
-                  className="p-4 text-xl font-medium border rounded-md border-primary-50 text-primary-950  outline-none flex-1"
+                  className="p-2 text-sm font-medium border rounded-md border-primary-50 text-primary-950 bg-primary-100  outline-none flex-1"
                 />
                 <button onClick={() => remove(index)}>
                   <XMarkIcon className="h-8 w-8 text-primary-500 hover:text-primary-200" />
                 </button>
               </div>
               {errors?.boardColumns?.[index]?.columnName?.message && (
-                <p className="text-lg text-red-300 font-light [word-spacing:2px] mt-2">
+                <p className="text-sm md:text-base text-red-300 font-light [word-spacing:2px] mt-2">
                   {errors?.boardColumns?.[index]?.columnName?.message}
                 </p>
               )}
@@ -105,7 +110,7 @@ export default function CreateBoardForm({ boards, onCloseModal }) {
           ))}
         </div>
         {errors?.boardColumns?.root?.message && (
-          <p className="text-lg text-red-300 font-light [word-spacing:2px]">
+          <p className="text-sm md:text-base text-red-300 font-light [word-spacing:2px]">
             {errors?.boardColumns?.root?.message}
           </p>
         )}
@@ -115,32 +120,38 @@ export default function CreateBoardForm({ boards, onCloseModal }) {
         <button
           type="button"
           onClick={() => append({ columnName: "" })}
-          className="flex items-center justify-center gap-4 bg-primary-700 rounded-3xl p-4 hover:bg-primary-600 transition-all"
+          className="flex items-center justify-center gap-4 bg-primary-700 rounded-3xl p-2 hover:bg-primary-600 transition-all"
         >
           <span>
-            <PlusCircleIcon className="h-7 w-7 " />
+            <PlusCircleIcon className="h-4 w-4 md:h-5 md:w-5" />
           </span>
-          <span className="text-xl">Add column</span>
+          <span className="text-sm md:text-base lg:text-lg [word-spacing:4px]">
+            Add column
+          </span>
         </button>
 
         <button
           disabled={isPending}
           type="submit"
-          className="flex items-center justify-center gap-4 text-xl bg-primary-700 rounded-3xl p-4 hover:bg-primary-600 transition-all"
+          className="flex items-center justify-center gap-4 md:text-lg lg:text-xl bg-primary-700 rounded-3xl p-2 hover:bg-primary-600 transition-all"
         >
           {!isPending ? (
             <>
               <span>
-                <PlusIcon className="h-7 w-7" />
+                <PlusIcon className="h-4 w-4 md:h-5 md:w-5" />
               </span>
-              <span>Create board</span>
+              <span className="text-sm md:text-base lg:text-lg [word-spacing:4px]">
+                Create board
+              </span>
             </>
           ) : (
             <>
               <span>
                 <SpinnerMini />
               </span>
-              <span>Creating board</span>
+              <span className="text-sm md:text-base lg:text-lg [word-spacing:4px]">
+                Creating board
+              </span>
             </>
           )}
         </button>

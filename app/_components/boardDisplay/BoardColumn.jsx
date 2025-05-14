@@ -18,9 +18,9 @@ export default function BoardColumn({
   );
 
   return (
-    <div className="min-w-[450px]  flex flex-col gap-6  rounded-xl p-4 bg-primary-900 shadow-md shadow-primary-900 group">
+    <div className="min-w-[350px] flex flex-col gap-4  rounded-xl p-4 bg-primary-900 shadow-md shadow-primary-900 group">
       <div className="flex items-center justify-between text-primary-500">
-        <h3 className="uppercase text-primary-500 font-semibold text-lg [word-spacing:4px]">
+        <h3 className="uppercase text-primary-500 font-semibold text-sm [word-spacing:4px]">
           {boardColumn.columnName} ({tasksForColumn.length})
         </h3>
 

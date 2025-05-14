@@ -13,7 +13,7 @@ export default function ColContextMenu({ boardColumn }) {
           <Menus.List id={boardColumn.id}>
             <Modal.Open opens="deleteColumnForm">
               <Menus.Button
-                icon={<TrashIcon className="h-6 w-6 text-red-400" />}
+                icon={<TrashIcon className="h-5 w-5  text-red-400" />}
               >
                 Delete column
               </Menus.Button>

@@ -5,12 +5,12 @@ export default function DeleteResourceForm({
 }) {
   return (
     <div className="flex flex-col gap-10">
-      <p className="text-2xl [word-spacing:4px] font-medium text-accent-300 text-center">
-        Are you sure you want to delete '{resourceName}' ?
+      <p className="text-base lg:text-lg [word-spacing:4px] font-medium text-accent-300 text-center leading-10">
+        Are you sure you want to delete - '{resourceName}' ?
       </p>
-      <div className="flex items-center justify-center gap-6 text-xl font-semibold tracking-wide text-primary-50">
+      <div className="flex flex-col md:flex-row items-center justify-center gap-6 text-xl font-semibold tracking-wide text-primary-50">
         <button
-          className="border-none py-4 px-6 rounded-3xl bg-red-500 hover:bg-red-400"
+          className="border-none text-sm md:text-base lg:text-lg py-3 px-12 md:py-2 md:px-4 rounded-2xl  bg-red-500 hover:bg-red-400"
           onClick={() => {
             onConfirm();
             onCloseModal?.();
@@ -19,7 +19,7 @@ export default function DeleteResourceForm({
           Yes
         </button>
         <button
-          className="border py-4 px-6 rounded-3xl hover:bg-primary-800"
+          className="border text-sm md:text-base lg:text-lg py-3 px-12 md:py-2 md:px-4 rounded-2xl hover:bg-primary-800"
           onClick={onCloseModal}
         >
           No

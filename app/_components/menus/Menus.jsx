@@ -80,10 +80,10 @@ function Button({ icon, children, onClick }) {
     <li>
       <button
         onClick={handleClick}
-        className="w-full text-left text-primary-50 bg-primary-900 hover:bg-primary-800 border-none p-6 [word-spacing:4px] transition-all  flex items-center gap-4"
+        className="text-xs w-full text-left text-primary-50 bg-primary-900 hover:bg-primary-800 border-none p-4 [word-spacing:4px] transition-all  flex items-center gap-4"
       >
         {icon}
-        <span className="text-lg">{children}</span>
+        <span>{children}</span>
       </button>
     </li>
   );

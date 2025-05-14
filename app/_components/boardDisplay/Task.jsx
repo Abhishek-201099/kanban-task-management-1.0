@@ -13,13 +13,15 @@ export default function Task({ task, tasks, subtasksForCol, boardColumns }) {
   );
 
   return (
-    <div className="task-item flex items-center  border border-primary-800 border-dashed rounded-xl px-4 py-4 hover:border-opacity-100 border-opacity-0">
-      <div className="flex-1">
+    <div className="task-item flex items-center  border border-primary-800 border-dashed rounded-xl p-3 hover:border-opacity-100 border-opacity-0">
+      <div className="w-11/12">
         <Modal>
           <Modal.Open opens="taskInfo">
-            <div className="task-item-heading px-12 py-4 [word-spacing:4px] bg-primary-700 hover:bg-primary-600 transition-all cursor-pointer rounded-xl shadow-md shadow-primary-800">
-              <div className="text-xl font-semibold mb-4">{task.taskName}</div>
-              <div className="text-primary-400 text-base font-bold">
+            <div className="flex flex-col gap-2 task-item-heading px-4 py-3  [word-spacing:4px] bg-primary-700 hover:bg-primary-600 transition-all cursor-pointer rounded-xl shadow-md shadow-primary-800">
+              <div className="text-base font-semibold  text-primary-100 overflow-hidden truncate w-full">
+                {task.taskName}
+              </div>
+              <div className="text-primary-400 text-xs  font-bold">
                 {
                   subtaskForTask.filter((subtask) => subtask.isChecked === true)
                     .length
@@ -44,13 +46,13 @@ export default function Task({ task, tasks, subtasksForCol, boardColumns }) {
             <Menus.Toggle id="task-context" direction="vertical" />
             <Menus.List id="task-context">
               <Modal.Open opens="editTaskForm">
-                <Menus.Button icon={<PencilSquareIcon className="h-6 w-6" />}>
+                <Menus.Button icon={<PencilSquareIcon className="h-5 w-5" />}>
                   Edit task
                 </Menus.Button>
               </Modal.Open>
               <Modal.Open opens="deleteTaskForm">
                 <Menus.Button
-                  icon={<TrashIcon className="h-6 w-6 text-red-400" />}
+                  icon={<TrashIcon className="h-5 w-5 text-red-400" />}
                 >
                   Delete task
                 </Menus.Button>

@@ -9,11 +9,11 @@ export default async function NavBoards() {
   const boards = await getBoards(account.id);
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col justify-between pb-4 gap-3">
       {boards.length ? (
         <>
           {" "}
-          <h3 className="px-6 uppercase font-medium text-primary-300  [word-spacing:4px]">
+          <h3 className="px-6 uppercase font-medium lg:text-sm text-primary-300  [word-spacing:4px]">
             All boards ({boards.length})
           </h3>
           <Boards boards={boards} />

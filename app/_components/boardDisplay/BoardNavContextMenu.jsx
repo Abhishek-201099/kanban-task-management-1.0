@@ -21,14 +21,16 @@ export default function BoardNavContextMenu({ boards }) {
           <Menus.List id={board.id}>
             <Modal.Open opens="updateBoardNameForm">
               <Menus.Button
-                icon={<PencilSquareIcon className="h-6 w-6 text-primary-500" />}
+                icon={
+                  <PencilSquareIcon className="h-5 w-5  text-primary-500" />
+                }
               >
                 Edit board Name
               </Menus.Button>
             </Modal.Open>
             <Modal.Open opens="deleteBoard">
               <Menus.Button
-                icon={<TrashIcon className="h-6 w-6 text-red-400" />}
+                icon={<TrashIcon className="h-5 w-5  text-red-400" />}
               >
                 Delete board
               </Menus.Button>

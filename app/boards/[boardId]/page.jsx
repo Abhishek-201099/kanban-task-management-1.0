@@ -26,7 +26,7 @@ export default async function Page({ params }) {
   const subtasks = await getSubtasksForTask(boardId, account.id);
 
   return (
-    <div className="grid grid-rows-[auto_1fr]">
+    <div className="grid grid-rows-[auto_1fr] h-screen">
       <BoardNav
         boards={boards}
         boardId={boardId}

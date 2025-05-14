@@ -28,10 +28,13 @@ export default function AccountSettingsForm({ account }) {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-12 px-6  py-10 bg-primary-900 w-1/2 rounded-xl"
+      className="flex flex-col gap-12 px-6  py-10 bg-primary-900 md:w-[500px] lg:w-[700px] rounded-xl"
     >
       <div className="flex flex-col gap-6">
-        <label htmlFor="fullName" className="text-2xl text-primary-300">
+        <label
+          htmlFor="fullName"
+          className="text-lg lg:text-xl text-primary-300"
+        >
           Full name
         </label>
         <input
@@ -50,17 +53,20 @@ export default function AccountSettingsForm({ account }) {
             },
           })}
           placeholder="e.g. Abhishek Bhattacharjee"
-          className="p-3 text-xl font-medium border rounded-md border-primary-50 text-primary-950  outline-none"
+          className="p-2 text-sm font-medium border rounded-md border-primary-50 text-primary-950  outline-none"
         />
         {errors?.fullName?.message && (
-          <p className="text-lg text-red-300 font-light [word-spacing:2px]">
+          <p className="text-sm md:text-base text-red-300 font-light [word-spacing:2px]">
             {errors?.fullName?.message}
           </p>
         )}
       </div>
 
       <div className="flex flex-col gap-4">
-        <label htmlFor="email" className="text-2xl text-primary-300">
+        <label
+          htmlFor="email"
+          className="text-xs md:text-sm lg:text-base text-primary-300"
+        >
           Email
         </label>
         <input
@@ -71,28 +77,32 @@ export default function AccountSettingsForm({ account }) {
             required: "This field is required",
           })}
           placeholder="e.g. xyz@gmail.com"
-          className="p-3 text-xl font-medium border rounded-md border-none text-primary-950  outline-none cursor-not-allowed"
+          className="p-2 text-sm font-medium border rounded-md border-none text-primary-950  outline-none cursor-not-allowed"
         />
       </div>
 
       <button
         disabled={isPending}
         type="submit"
-        className="flex items-center justify-center gap-4 text-xl bg-primary-700 rounded-3xl p-4 hover:bg-primary-600 transition-all disabled:cursor-not-allowed"
+        className="flex items-center justify-center gap-4 text-xl bg-primary-700 rounded-3xl p-2 hover:bg-primary-600 transition-all disabled:cursor-not-allowed"
       >
         {!isPending ? (
           <>
             <span>
-              <ArrowPathIcon className="h-8 w-8" />
+              <ArrowPathIcon className="h-4 w-4 md:h-5 md:w-5" />
             </span>
-            <span>Update profile</span>
+            <span className="text-sm md:text-base lg:text-lg [word-spacing:4px]">
+              Update profile
+            </span>
           </>
         ) : (
           <>
             <span>
               <SpinnerMini />
             </span>
-            <span>Updating</span>
+            <span className="text-sm md:text-base lg:text-lg [word-spacing:4px]">
+              Updating
+            </span>
           </>
         )}
       </button>

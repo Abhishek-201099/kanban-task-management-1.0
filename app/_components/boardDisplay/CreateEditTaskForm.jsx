@@ -52,14 +52,17 @@ export default function CreateEditTaskForm({
   }
 
   return (
-    <div className="flex flex-col gap-6">
-      <p className="text-4xl font-bold [word-spacing:6px] text-accent-400 uppercase">
+    <div className="flex flex-col gap-4">
+      <p className="text-lg lg:text-xl font-bold [word-spacing:6px] text-accent-400 uppercase">
         {Object.keys(curTask).length === 0 ? "Add new task" : "Edit task"}
       </p>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
         {/* TaskName */}
         <div className="flex flex-col gap-2 mb-2">
-          <label htmlFor="taskName" className="text-xl text-primary-300">
+          <label
+            htmlFor="taskName"
+            className="text-xs md:text-sm lg:text-base text-primary-300"
+          >
             Task name
           </label>
           <input
@@ -88,17 +91,20 @@ export default function CreateEditTaskForm({
               },
             })}
             placeholder="e.g. Refactor files"
-            className="p-4 text-xl font-medium border rounded-md border-primary-50 text-primary-950  outline-none"
+            className="p-2 text-sm font-medium border rounded-md border-primary-50 text-primary-950  bg-primary-100 outline-none"
           />
           {errors?.taskName?.message && (
-            <p className="text-lg text-red-300 font-light [word-spacing:2px]">
+            <p className="text-sm md:text-base text-red-300 font-light [word-spacing:2px]">
               {errors?.taskName?.message}
             </p>
           )}
         </div>
         {/* Description */}
         <div className="flex flex-col gap-2 mb-2">
-          <label htmlFor="taskDescription" className="text-xl text-primary-300">
+          <label
+            htmlFor="taskDescription"
+            className="text-xs md:text-sm lg:text-base text-primary-300"
+          >
             Description
           </label>
           <textarea
@@ -112,17 +118,19 @@ export default function CreateEditTaskForm({
             {...register("taskDescription", {
               required: "This field is required",
             })}
-            className="p-4 text-xl font-medium border rounded-md border-primary-50 text-primary-950  outline-none"
+            className="p-2 text-sm font-medium border rounded-md border-primary-50 text-primary-950  bg-primary-100 outline-none"
           ></textarea>
           {errors?.taskDescription?.message && (
-            <p className="text-lg text-red-300 font-light [word-spacing:2px]">
+            <p className="text-sm md:text-base text-red-300 font-light [word-spacing:2px]">
               {errors?.taskDescription?.message}
             </p>
           )}
         </div>
         {/* Subtasks */}
         <div className="flex flex-col gap-4 max-h-[300px]">
-          <label className="text-xl text-primary-300">Subtasks</label>
+          <label className="text-xs md:text-sm lg:text-base text-primary-300">
+            Subtasks
+          </label>
           <div className="flex flex-col gap-4 overflow-scroll scrollbar-hide">
             {fields.map((subtask, index) => (
               <div key={subtask.id}>
@@ -133,14 +141,14 @@ export default function CreateEditTaskForm({
                       required: "This field is required",
                     })}
                     placeholder={`e.g. Subtask ${index + 1}`}
-                    className="p-4 text-xl font-medium border rounded-md border-primary-50 text-primary-950  outline-none flex-1"
+                    className="p-2 text-sm font-medium border rounded-md border-primary-50 text-primary-950 bg-primary-100  outline-none flex-1"
                   />
                   <button onClick={() => remove(index)}>
                     <XMarkIcon className="h-8 w-8 text-primary-500 hover:text-primary-200" />
                   </button>
                 </div>
                 {errors?.subtasks?.[index]?.subtaskName?.message && (
-                  <p className="text-lg text-red-300 font-light [word-spacing:2px] mt-2">
+                  <p className="text-sm md:text-base text-red-300 font-light [word-spacing:2px] mt-2">
                     {errors?.subtasks?.[index]?.subtaskName?.message}
                   </p>
                 )}
@@ -148,19 +156,21 @@ export default function CreateEditTaskForm({
             ))}
           </div>
           {errors?.subtasks?.root?.message && (
-            <p className="text-lg text-red-300 font-light [word-spacing:2px]">
+            <p className="text-sm md:text-base text-red-300 font-light [word-spacing:2px]">
               {errors?.subtasks?.root?.message}
             </p>
           )}
           <button
             type="button"
             onClick={() => append({ subtaskName: "" })}
-            className="flex items-center justify-center gap-4 bg-primary-700 rounded-3xl p-4 hover:bg-primary-600 transition-all"
+            className="flex items-center justify-center gap-4 bg-primary-700 rounded-3xl p-2 hover:bg-primary-600 transition-all"
           >
             <span>
-              <PlusCircleIcon className="h-7 w-7" />
+              <PlusCircleIcon className="h-4 w-4 md:h-5 md:w-5" />
             </span>
-            <span className="text-xl">Add subtask</span>
+            <span className="text-sm md:text-base lg:text-lg [word-spacing:4px]">
+              Add subtask
+            </span>
           </button>
         </div>
 
@@ -168,7 +178,7 @@ export default function CreateEditTaskForm({
         <div className="flex flex-col gap-2 mb-2">
           <label
             htmlFor="taskCurrentStatus"
-            className="text-xl text-primary-300"
+            className="text-xs md:text-sm lg:text-base text-primary-300"
           >
             Current Status
           </label>
@@ -183,7 +193,7 @@ export default function CreateEditTaskForm({
                   ).columnName
                 : ""
             }
-            className="p-4 text-xl font-medium border rounded-md border-primary-50 text-primary-950  outline-none"
+            className="p-2 text-sm font-medium border rounded-md border-primary-50 text-primary-950  bg-primary-100 outline-none"
           >
             {boardColumns.map((boardColumn, index) => {
               return (
@@ -198,12 +208,12 @@ export default function CreateEditTaskForm({
         {/* Add task */}
         <button
           type="submit"
-          className="flex items-center justify-center gap-4 text-xl bg-primary-700 rounded-3xl p-4 hover:bg-primary-600 transition-all"
+          className="flex items-center justify-center gap-4 text-xl bg-primary-700 rounded-3xl p-2 hover:bg-primary-600 transition-all"
         >
           <span>
-            <PlusIcon className="h-7 w-7" />
+            <PlusIcon className="h-4 w-4 md:h-5 md:w-5" />
           </span>
-          <span>
+          <span className="text-sm md:text-base lg:text-lg [word-spacing:4px]">
             {Object.keys(curTask).length === 0 ? "Add task" : "Edit task"}
           </span>
         </button>

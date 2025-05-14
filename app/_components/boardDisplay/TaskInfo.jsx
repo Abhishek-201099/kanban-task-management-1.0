@@ -29,16 +29,16 @@ export default function TaskInfo({
 
   return (
     <form onSubmit={handleSubmit} className=" flex flex-col gap-10">
-      <h3 className="text-2xl font-semibold text-accent-300 [word-spacing:2px]">
+      <h3 className="text-xl md:text-2xl font-semibold text-accent-300 [word-spacing:2px]">
         {task.taskName}
       </h3>
 
-      <p className="text-lg  text-primary-200 [word-spacing:2px]">
+      <p className="text-sm md:text-lg  text-primary-200 [word-spacing:2px]">
         {task.taskDescription}
       </p>
 
       <div className="flex flex-col gap-4 [word-spacing:4px]">
-        <p className="text-xl  text-primary-200 ">
+        <p className="text-base md:text-xl  text-primary-200 ">
           Subtasks (
           {subtasks.filter((subtask) => subtask.isChecked === true).length} of{" "}
           {subtaskForTask.length})
@@ -47,11 +47,11 @@ export default function TaskInfo({
           return (
             <div
               key={index}
-              className="flex gap-4 items-center bg-primary-800 p-4 rounded-lg"
+              className="flex gap-4 items-center bg-primary-800 py-2 px-4 rounded-lg"
             >
               <input
                 type="checkbox"
-                className="h-5 w-5"
+                className="h-4 w-4 md:h-5 md:w-5"
                 checked={subtask.isChecked}
                 onChange={() => {
                   setSubtasks((subtasks) => {
@@ -66,7 +66,7 @@ export default function TaskInfo({
                 }}
               />
               <label
-                className={`text-lg ${subtask.isChecked ? "line-through" : ""}`}
+                className={`p-2 text-sm ${subtask.isChecked ? "line-through" : ""}`}
               >
                 {subtask.subtaskName}
               </label>
@@ -76,11 +76,13 @@ export default function TaskInfo({
       </div>
 
       <div className="flex flex-col gap-4">
-        <p>Current status</p>
+        <p className="text-base md:text-xl  text-primary-200 ">
+          Current status
+        </p>
         <select
           value={currentStatus}
           onChange={(e) => setCurrentStatus(e.target.value)}
-          className="p-4 text-xl font-medium border rounded-md border-primary-50 text-primary-950  outline-none"
+          className="p-2 text-sm font-medium border rounded-md border-primary-50 text-primary-950  outline-none"
         >
           {boardColumns.map((boardColumn, index) => (
             <option key={index} value={boardColumn.columnName}>
@@ -90,11 +92,13 @@ export default function TaskInfo({
         </select>
       </div>
 
-      <button className="flex items-center justify-center gap-4 text-xl bg-primary-700 rounded-3xl p-4 hover:bg-primary-600 transition-all">
+      <button className="flex items-center justify-center gap-4 text-xl bg-primary-700 rounded-3xl p-2 hover:bg-primary-600 transition-all">
         <span>
-          <ArrowPathIcon className="h-8 w-8" />
+          <ArrowPathIcon className="h-4 w-4 md:h-5 md:w-5" />
         </span>
-        <span>Update task</span>
+        <span className="text-sm md:text-base lg:text-lg [word-spacing:4px]">
+          Update task
+        </span>
       </button>
     </form>
   );
