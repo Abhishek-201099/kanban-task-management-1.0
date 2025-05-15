@@ -34,10 +34,10 @@ function Window({ children, name }) {
   if (openName !== name) return null;
 
   return createPortal(
-    <div className="fixed top-0 left-0 w-full h-screen backdrop-blur-sm z-1000 transition-all">
+    <div className="fixed top-0 left-0 right-0 bottom-0 backdrop-blur-sm z-1000 transition-all">
       <div
         ref={ref}
-        className="overflow-scroll scrollbar-hide w-[360px]  md:min-w-[500px] lg:min-w-[600px] max-h-[600px]   fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 px-4 py-5 md:px-10 md:py-6 flex flex-col gap-6 rounded-xl bg-primary-900 shadow-2xl pb-8"
+        className="overflow-scroll scrollbar-hide w-[360px]  md:w-[500px] lg:w-[600px] h-auto  max-h-[450px] lg:max-h-[600px] mx-auto mt-20 md:mt-10 lg:mt-5 px-4 py-5 md:px-10 md:py-6 flex flex-col gap-6 rounded-xl bg-primary-900 shadow-2xl pb-8"
       >
         <div className="flex items-center justify-end">
           <button onClick={close}>

@@ -10,7 +10,7 @@ export default function BoardNav({ boardId, boards, boardColumns, tasks }) {
   const board = boards.find((board) => board.id === +boardId);
 
   return (
-    <div className="flex items-center justify-between bg-primary-900 lg:p-5">
+    <div className="flex items-center justify-between bg-primary-900 pr-5 lg:p-5">
       <div className="w-36 md:w-auto mr-auto md:text-lg p-6 lg:text-xl font-medium text-accent-300 [word-spacing:4px] flex items-center gap-2 lg:gap-4">
         <h2 className="overflow-hidden truncate">
           {board.boardName.toUpperCase()}
