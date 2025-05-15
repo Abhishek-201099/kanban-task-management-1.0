@@ -6,7 +6,7 @@ export default function DeleteResourceForm({
   return (
     <div className="flex flex-col gap-10">
       <p className="text-base lg:text-lg [word-spacing:4px] font-medium text-accent-300 text-center leading-10">
-        Are you sure you want to delete - '{resourceName}' ?
+        Are you sure you want to delete - &apos;{resourceName}&apos; ?
       </p>
       <div className="flex flex-col md:flex-row items-center justify-center gap-6 text-xl font-semibold tracking-wide text-primary-50">
         <button
