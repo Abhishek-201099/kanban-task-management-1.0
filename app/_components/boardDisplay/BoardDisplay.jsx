@@ -5,7 +5,7 @@ export default function BoardDisplay({ boardColumns, tasks, subtasks }) {
   return (
     <main className="overflow-scroll scrollbar-hide">
       {/* Columns */}
-      <div className="flex gap-6 h-full p-4 ">
+      <div className="flex gap-6 min-h-full p-4 ">
         {boardColumns.map((boardColumn, index) => (
           <BoardColumn
             key={index}

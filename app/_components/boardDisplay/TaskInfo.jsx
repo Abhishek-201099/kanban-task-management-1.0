@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { ArrowPathIcon } from "@heroicons/react/24/solid";
 
 import { updateTaskAction } from "@/app/_lib/actions";
+import SpinnerMini from "../ui/SpinnerMini";
 
 export default function TaskInfo({
   task,
@@ -9,6 +10,8 @@ export default function TaskInfo({
   boardColumns,
   onCloseModal,
 }) {
+  const [isPending, startTransition] = useTransition();
+
   const [currentStatus, setCurrentStatus] = useState(
     boardColumns.find((boardColumn) => boardColumn.id === task.columnId)
       .columnName
@@ -23,8 +26,10 @@ export default function TaskInfo({
       (boardColumn) => boardColumn.columnName === currentStatus
     );
 
-    await updateTaskAction(selectedColumn, subtasks, task);
-    onCloseModal?.();
+    startTransition(async () => {
+      await updateTaskAction(selectedColumn, subtasks, task);
+      onCloseModal?.();
+    });
   }
 
   return (
@@ -92,13 +97,29 @@ export default function TaskInfo({
         </select>
       </div>
 
-      <button className="flex items-center justify-center gap-4 text-xl bg-primary-700 rounded-3xl p-2 hover:bg-primary-600 transition-all">
-        <span>
-          <ArrowPathIcon className="h-4 w-4 md:h-5 md:w-5" />
-        </span>
-        <span className="text-sm md:text-base lg:text-lg [word-spacing:4px]">
-          Update task
-        </span>
+      <button
+        disabled={isPending}
+        className="flex items-center justify-center gap-4 text-xl bg-primary-700 rounded-3xl p-2 hover:bg-primary-600 transition-all"
+      >
+        {!isPending ? (
+          <>
+            <span>
+              <ArrowPathIcon className="h-4 w-4 md:h-5 md:w-5" />
+            </span>
+            <span className="text-sm md:text-base lg:text-lg [word-spacing:4px]">
+              Update task
+            </span>
+          </>
+        ) : (
+          <>
+            <span>
+              <SpinnerMini />
+            </span>
+            <span className="text-sm md:text-base lg:text-lg [word-spacing:4px]">
+              Updating
+            </span>
+          </>
+        )}
       </button>
     </form>
   );

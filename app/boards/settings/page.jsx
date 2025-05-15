@@ -13,7 +13,7 @@ export default async function Page() {
   const account = await getAccount(session.user.email);
 
   return (
-    <main className="h-full p-8 md:p-20">
+    <main className="h-screen p-8 md:p-20">
       <h1 className="text-xl md:text-2xl lg:text-4xl text-accent-500 uppercase [word-spacing:10px] tracking-wider font-semibold mb-10">
         Profile settings
       </h1>
@@ -27,9 +27,7 @@ export default async function Page() {
         <span>
           <ArrowLongLeftIcon className="h-4 w-4 md:h-5 md:w-5" />
         </span>
-        <span className="text-sm md:text-base lg:text-lg [word-spacing:4px]">
-          Go back
-        </span>
+        <span className="text-sm md:text-base [word-spacing:4px]">Go back</span>
       </Link>
     </main>
   );

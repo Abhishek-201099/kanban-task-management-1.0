@@ -31,11 +31,10 @@ export default function CreateBoardForm({ boards, onCloseModal }) {
 
   async function onSubmit(data) {
     const { boardName, boardColumns } = data;
-    startTransition(
-      async () => await createNewBoardAction(boardName, boardColumns)
-    );
-    reset();
-    onCloseModal();
+    startTransition(async () => {
+      await createNewBoardAction(boardName, boardColumns);
+      onCloseModal();
+    });
   }
 
   return (

@@ -24,7 +24,7 @@ export default function BoardColumn({
           {boardColumn.columnName} ({tasksForColumn.length})
         </h3>
 
-        <ColContextMenu boardColumn={boardColumn} />
+        <ColContextMenu boardColumn={boardColumn} boardColumns={boardColumns} />
       </div>
 
       {/* Tasks */}

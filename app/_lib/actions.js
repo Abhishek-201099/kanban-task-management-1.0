@@ -221,7 +221,7 @@ export async function editTaskAction(data, curTask, subtaskForTask) {
         .from("subtasks")
         .update({
           subtaskName: foundTask.subtaskName,
-          isChecked: foundTask.isChecked,
+          isChecked: subtask.isChecked,
           accountId: foundTask.accountId,
           columnId: foundTask.columnId,
           boardId: foundTask.boardId,
@@ -274,6 +274,22 @@ export async function editTaskAction(data, curTask, subtaskForTask) {
         throw new Error("There was an error in adding subtask");
       }
     }
+  }
+
+  revalidatePath(`/boards/${boardId}`);
+}
+
+export async function editColumnNameAction(data) {
+  const { updatedColumnName, columnId, boardId } = data;
+
+  const { error } = await supabase
+    .from("columns")
+    .update({ columnName: updatedColumnName })
+    .eq("id", columnId);
+
+  if (error) {
+    console.log("##editColumnNameAction error : ", error.message);
+    throw new Error("There was an error in editing column name");
   }
 
   revalidatePath(`/boards/${boardId}`);

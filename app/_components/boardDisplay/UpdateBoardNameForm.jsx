@@ -3,8 +3,11 @@ import { useForm } from "react-hook-form";
 import { ArrowPathIcon } from "@heroicons/react/24/solid";
 
 import { updateBoardNameAction } from "@/app/_lib/actions";
+import { useTransition } from "react";
+import SpinnerMini from "../ui/SpinnerMini";
 
 export default function UpdateBoardNameForm({ boards, onCloseModal }) {
+  const [isPending, startTransition] = useTransition();
   const boardId = +usePathname().split("/").at(2);
   const board = boards.find((board) => board.id === boardId);
 
@@ -20,8 +23,10 @@ export default function UpdateBoardNameForm({ boards, onCloseModal }) {
 
   async function onSubmit(data) {
     data.boardId = boardId;
-    await updateBoardNameAction(data);
-    onCloseModal();
+    startTransition(async () => {
+      await updateBoardNameAction(data);
+      onCloseModal?.();
+    });
   }
 
   return (
@@ -62,15 +67,29 @@ export default function UpdateBoardNameForm({ boards, onCloseModal }) {
       )}
 
       <button
+        disabled={isPending}
         type="submit"
         className="flex items-center justify-center gap-4 text-xl bg-primary-700 rounded-3xl p-2 hover:bg-primary-600 transition-all [word-spacing:4px]"
       >
-        <span>
-          <ArrowPathIcon className="h-4 w-4 md:h-5 md:w-5" />
-        </span>
-        <span className="text-sm md:text-base lg:text-lg [word-spacing:4px]">
-          Update board name
-        </span>
+        {!isPending ? (
+          <>
+            <span>
+              <ArrowPathIcon className="h-4 w-4 md:h-5 md:w-5" />
+            </span>
+            <span className="text-sm md:text-base lg:text-lg [word-spacing:4px]">
+              Update board name
+            </span>
+          </>
+        ) : (
+          <>
+            <span>
+              <SpinnerMini />
+            </span>
+            <span className="text-sm md:text-base lg:text-lg [word-spacing:4px]">
+              Updating
+            </span>
+          </>
+        )}
       </button>
     </form>
   );

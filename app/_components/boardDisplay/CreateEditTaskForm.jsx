@@ -3,6 +3,8 @@ import { useFieldArray, useForm } from "react-hook-form";
 import { PlusCircleIcon, PlusIcon, XMarkIcon } from "@heroicons/react/24/solid";
 
 import { addNewTaskAction, editTaskAction } from "@/app/_lib/actions";
+import { useTransition } from "react";
+import SpinnerMini from "../ui/SpinnerMini";
 
 export default function CreateEditTaskForm({
   boardColumns,
@@ -12,6 +14,7 @@ export default function CreateEditTaskForm({
   onCloseModal,
 }) {
   const pathName = usePathname();
+  const [isPending, startTransition] = useTransition();
   const {
     register,
     control,
@@ -43,12 +46,16 @@ export default function CreateEditTaskForm({
     ).id;
 
     if (Object.keys(curTask).length === 0) {
-      await addNewTaskAction(data);
+      startTransition(async () => {
+        await addNewTaskAction(data);
+        onCloseModal?.();
+      });
     } else {
-      await editTaskAction(data, curTask, subtaskForTask);
+      startTransition(async () => {
+        await editTaskAction(data, curTask, subtaskForTask);
+        onCloseModal?.();
+      });
     }
-
-    onCloseModal?.();
   }
 
   return (
@@ -161,6 +168,7 @@ export default function CreateEditTaskForm({
             </p>
           )}
           <button
+            disabled={isPending}
             type="button"
             onClick={() => append({ subtaskName: "" })}
             className="flex items-center justify-center gap-4 bg-primary-700 rounded-3xl p-2 hover:bg-primary-600 transition-all"
@@ -207,15 +215,29 @@ export default function CreateEditTaskForm({
 
         {/* Add task */}
         <button
+          disabled={isPending}
           type="submit"
           className="flex items-center justify-center gap-4 text-xl bg-primary-700 rounded-3xl p-2 hover:bg-primary-600 transition-all"
         >
-          <span>
-            <PlusIcon className="h-4 w-4 md:h-5 md:w-5" />
-          </span>
-          <span className="text-sm md:text-base lg:text-lg [word-spacing:4px]">
-            {Object.keys(curTask).length === 0 ? "Add task" : "Edit task"}
-          </span>
+          {!isPending ? (
+            <>
+              <span>
+                <PlusIcon className="h-4 w-4 md:h-5 md:w-5" />
+              </span>
+              <span className="text-sm md:text-base lg:text-lg [word-spacing:4px]">
+                {Object.keys(curTask).length === 0 ? "Add task" : "Edit task"}
+              </span>
+            </>
+          ) : (
+            <>
+              <span>
+                <SpinnerMini />
+              </span>
+              <span className="text-sm md:text-base lg:text-lg [word-spacing:4px]">
+                {Object.keys(curTask).length === 0 ? "Adding" : "Editing"}
+              </span>
+            </>
+          )}
         </button>
       </form>
     </div>

@@ -28,7 +28,7 @@ export default function AccountSettingsForm({ account }) {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-12 px-6  py-10 bg-primary-900 md:w-[500px] lg:w-[700px] rounded-xl"
+      className="flex flex-col gap-12 px-6  py-10 bg-primary-900 md:w-[500px] rounded-xl"
     >
       <div className="flex flex-col gap-6">
         <label
