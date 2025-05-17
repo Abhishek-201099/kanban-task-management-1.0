@@ -1,5 +1,6 @@
 import { revalidatePath } from "next/cache";
 import { supabase } from "./supabase";
+import { notFound } from "next/navigation";
 
 // Get account
 export async function getAccount(email) {
@@ -8,6 +9,10 @@ export async function getAccount(email) {
     .select("*")
     .eq("email", email)
     .single();
+
+  if (error) {
+    notFound();
+  }
 
   return data;
 }
@@ -33,7 +38,8 @@ export async function getBoards(accountId) {
     .order("created_at");
 
   if (error) {
-    throw new Error("There was an error in getting boards");
+    // throw new Error("There was an error in getting boards");
+    notFound();
   }
 
   return data;
@@ -48,7 +54,8 @@ export async function getBoard(boardId) {
 
   if (error) {
     console.log("##getBoard : ", error.message);
-    throw new Error("There was an error in getting the board");
+    notFound();
+    // throw new Error("There was an error in getting the board");
   }
 
   revalidatePath(`/boards/${boardId}`);
@@ -64,7 +71,8 @@ export async function getBoardColumns(boardId) {
 
   if (error) {
     console.log("###getBoardColumns error : ", error.message);
-    throw new Error("There was an error in getting the board columns");
+    notFound();
+    // throw new Error("There was an error in getting the board columns");
   }
 
   return columns;
@@ -80,7 +88,8 @@ export async function getTasks(accountId, boardId) {
 
   if (error) {
     console.log("###GetTasks error : ", error.message);
-    throw new Error("There was an error in getting tasks");
+    notFound();
+    // throw new Error("There was an error in getting tasks");
   }
 
   return tasks;
@@ -96,7 +105,8 @@ export async function getSubtasksForTask(boardId, accountId) {
 
   if (error) {
     console.log("###GetSubtasks error : ", error.message);
-    throw new Error("There was an error in getting subtasks");
+    notFound();
+    // throw new Error("There was an error in getting subtasks");
   }
 
   return subtasks;
