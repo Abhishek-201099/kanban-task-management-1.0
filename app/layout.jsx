@@ -11,7 +11,8 @@ export const metadata = {
     template: "%s | Kanban task management",
     default: "Welcome | Kanban task management",
   },
-  description: "Kanban task management app to manage tasks",
+  description:
+    "A Kanban task management is a digital platform that helps users organize and track tasks.",
 };
 
 export default function RootLayout({ children }) {
